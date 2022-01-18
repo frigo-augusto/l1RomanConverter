@@ -72,8 +72,10 @@ void transformDiminutiveRomans(char* aux, char* transformedRomans){
 
 void concatFinalSubt(char** s2, char* s1Source, char* transformedAddictiveRomans, char* transformedDiminutiveRomans){
     *s2 = (char*) malloc(sizeof(char)* (strlen(s1Source) + strlen(transformedDiminutiveRomans) + strlen(transformedDiminutiveRomans)));
-    strcat(*s2, s1Source);
-    strcat(*s2, transformedAddictiveRomans);
+    char* aux = (char*) malloc((sizeof(s1Source) + sizeof(transformedAddictiveRomans))*sizeof(char) + sizeof(char));
+    strcat(aux, transformedAddictiveRomans);
+    strcat(aux, s1Source);
+    orderRoman(aux, *s2);
     strcat(*s2, transformedDiminutiveRomans);
 }
 
@@ -86,13 +88,14 @@ bool subtNotationMainTransform(char* s1, char** s2){
     int size = strlen(s1);
     char* s1Source = (char*) malloc(size*sizeof(char) + sizeof(char));
     char* transformedAddictiveRomans = (char*) malloc(size*sizeof(char) + sizeof(char));
-    char* transformedDiminutiveRomans = (char*) malloc(size*sizeof(char) + sizeof(char)); //verificar o tamanho disso, pq pode expandir
+    char* transformedDiminutiveRomans = (char*) malloc((size+50)*sizeof(char) + sizeof(char)); //verificar o tamanho disso, pq pode expandir
     orderRoman(s1, s1Source);
     transformAddictiveRoman(s1Source, transformedAddictiveRomans);
     cleanStringZeros(&s1Source);
     transformDiminutiveRomans(s1Source, transformedDiminutiveRomans);
     cleanStringZeros(&s1Source);
     concatFinalSubt(s2, s1Source, transformedAddictiveRomans, transformedDiminutiveRomans);
+    printf("romantoints2: %d", romanToInt(*s2));
     free(s1Source);
     free(transformedDiminutiveRomans);
     free(transformedAddictiveRomans);

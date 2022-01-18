@@ -23,6 +23,7 @@ void decilmalToAddRoman(char* s1, char* s2, int decimals1){
 bool additNotationMainTransform(char* s1, char** s2){
     char* auxS1 = (char*) malloc(strlen(s1) * sizeof(int));
     *s2 = (char*) malloc((strlen(s1) + 50)*sizeof(char)); //50 extras pq o tamanho da string pode mudar
+
     strcpy(auxS1, s1 );
     toUpperCase(auxS1);
     if (!isValid(auxS1)){
@@ -30,6 +31,8 @@ bool additNotationMainTransform(char* s1, char** s2){
     }
     int decimals1 = romanToInt(auxS1);
     decilmalToAddRoman(auxS1, *s2, decimals1);
+
     free(auxS1);
+
     return true;
 }

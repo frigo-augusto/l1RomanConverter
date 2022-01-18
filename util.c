@@ -113,14 +113,14 @@ int romanToInt(char* roman){
     return accumulator;
 }
 
-void orderRoman(char* s1, char* aux){
-    int size = strlen(s1), auxPosition = 0;
+void orderRoman(char* s1, char* dest){
+    int size = strlen(s1), destPosition = 0;
     char testers[] = {'M', 'D', 'C', 'L', 'X', 'V', 'I'};
     for (int i = 0; i < N_ROMAN_CHARACTERS; i++){
         for(int j = 0; j < size; j++){
             if (s1[j] == testers[i]){
-                aux[auxPosition] = testers[i];
-                auxPosition++;
+                dest[destPosition] = testers[i];
+                destPosition++;
             }
         }
     }

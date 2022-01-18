@@ -24,14 +24,14 @@ void main_free(char** a1, char** a2, char** d1, char** d2){
 }
 
 int main() {
-    char* a1, a2, d1, d2;
-    main_alloc(a1, a2, d1, d2);
-
-    printf("%d", additNotationMainTransform(a1, &a2));
-    printf("\ns1: %s    s2: %s", a1, a2);
-
-
-
-    main_free(a1, a2, d1, d2);
+    char* s1 = (char*) malloc(200*sizeof(char) + sizeof(char)); //somar 1 para dar espaco ao \0
+    char* s2 = NULL; //alocacao eh feita dentro da funcao
+    strcpy(s1, "IIIIIDLXXIII"); //inicializa a string
+    //printf("%d", additNotationMainTransform(s1, &s2));
+    printf("%d", subtNotationMainTransform(s1, &s2));
+    printf("\ns1: %s    s2: %s", s1, s2);
+    free(s1);
+    free(s2);
+    printf("\n");
     return 0;
 }

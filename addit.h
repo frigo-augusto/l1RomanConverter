@@ -7,5 +7,4 @@
 #ifndef ADDIT_H
 #define ADDIT_H
 bool additNotationMainTransform(char* s1, char** s2);
-
 #endif
