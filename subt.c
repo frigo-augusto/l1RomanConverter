@@ -11,9 +11,6 @@ void transformAddictiveRoman(char* aux, char* transformedRomans){
             if (testers[i] == aux[j]){
                 nCharTogether++;
             }
-            else{
-                break; //caracteres estao ordenados, continuar o loop apos ser diferente e inutil
-            }
             if (nCharTogether == charTogether){
                 transformedRomans[transformedRomansCounter] = testers[i - 1];
                 transformedRomansCounter++;
@@ -24,6 +21,7 @@ void transformAddictiveRoman(char* aux, char* transformedRomans){
             }
             j++;
         }
+        j = 0;
         is5Loop = !is5Loop;
         charTogether = 2 + (3*is5Loop);
     }
@@ -31,7 +29,6 @@ void transformAddictiveRoman(char* aux, char* transformedRomans){
 
 void transformDiminutiveRomans(char* aux, char* transformedRomans){
     int size = strlen(aux);
-    bool is5Loop = false;
     char testers[] = {'C', 'X', 'I'};
     char auxConcat[] = {'D', 'L', 'V'};
     int j = 0;
@@ -41,18 +38,7 @@ void transformDiminutiveRomans(char* aux, char* transformedRomans){
         while (j < size){
             printf("\ntesters[i]: %c aux[j]: %c", testers[i], aux[j]);
             if (testers[i] == aux[j]){
-                printf("charTogether++");
                 nCharTogether++;
-            }
-            else{
-                for (int k = 0; k < 3; k++){
-                    if (aux[j] == auxConcat[k]){
-                        j++;
-                        i--;
-                        break;
-                    }
-                }
-                break; //caracteres estao ordenados, continuar o loop apos ser diferente e inutil
             }
             if (nCharTogether == 4){
                 transformedRomans[transformedRomansCounter] = testers[i];
@@ -65,6 +51,7 @@ void transformDiminutiveRomans(char* aux, char* transformedRomans){
             }
             j++;
         }
+        j = 0;
         printf("   transfdimaux: %s    transfdimRom: %s", aux, transformedRomans);
     }
 }
@@ -76,7 +63,7 @@ void concatFinalSubt(char** s2, char* s1Source, char* transformedAddictiveRomans
     strcat(aux, transformedAddictiveRomans);
     strcat(aux, s1Source);
     orderRoman(aux, *s2);
-    strcat(*s2, transformedDiminutiveRomans);
+    strcat(*s2, transformedDiminutiveRomans); // a logica de tudo parece certa, mas nao posso so concatenar no final
 }
 
 bool subtNotationMainTransform(char* s1, char** s2){
@@ -99,4 +86,5 @@ bool subtNotationMainTransform(char* s1, char** s2){
     free(s1Source);
     free(transformedDiminutiveRomans);
     free(transformedAddictiveRomans);
+    return true;
 }
