@@ -58,8 +58,8 @@ void transformDiminutiveRomans(char* aux, char* transformedRomans){
 
 
 void concatFinalSubt(char** s2, char* s1Source, char* transformedAddictiveRomans, char* transformedDiminutiveRomans){
-    *s2 = (char*) malloc(sizeof(char)* (strlen(s1Source) + strlen(transformedDiminutiveRomans) + strlen(transformedDiminutiveRomans)));
-    char* aux = (char*) malloc((sizeof(s1Source) + sizeof(transformedAddictiveRomans))*sizeof(char) + sizeof(char));
+    *s2 = (char*) calloc((strlen(s1Source) + strlen(transformedDiminutiveRomans) + strlen(transformedDiminutiveRomans)), sizeof(char));
+    char* aux = (char*) calloc((sizeof(s1Source) + sizeof(transformedAddictiveRomans)) + 1, sizeof(char));
     strcat(aux, transformedAddictiveRomans);
     strcat(aux, s1Source);
     orderRoman(aux, *s2);

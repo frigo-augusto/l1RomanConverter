@@ -7,11 +7,11 @@
 
 /*
 void main_alloc(char** a1, char** a2, char** d1, char** d2){
-    *a1 = (char*) malloc(200*sizeof(char) + sizeof(char)); //somar 1 para dar espaco ao \0
+    *a1 = (char*) calloc(200 + 1, sizeof(char)); //somar 1 para dar espaco ao \0
     strcpy(*a1, "MMMMCMXCIX"); //inicializa a string
     *a2 = NULL; //alocacao eh feita dentro da funcao
 
-    *d1 = (char*) malloc(100*sizeof(char) + sizeof(char));
+    *d1 = (char*) malloc(100 + 1, sizeof(char));
     strcpy(*d1, "MMMMCMXCIX");
     *d2 = NULL;
 }

@@ -23,8 +23,8 @@ void decilmalToAddRoman(char* s2, int decimals1){
 
 
 bool additNotationMainTransform(char* s1, char** s2){
-    char* auxS1 = (char*) malloc(strlen(s1) * sizeof(int));
-    *s2 = (char*) malloc((strlen(s1) + 50)*sizeof(char)); //50 extras pq o tamanho da string pode mudar
+    char* auxS1 = (char*) calloc(strlen(s1), sizeof(int));
+    *s2 = (char*) calloc(strlen(s1) + 50, sizeof(char)); //50 extras pq o tamanho da string pode mudar
 
     strcpy(auxS1, s1 );
     toUpperCase(auxS1);
@@ -41,7 +41,7 @@ bool additNotationMainTransform(char* s1, char** s2){
 
 
 bool intToRomanMain(int n, char** roman){
-    char* additRoman = (char*) malloc((strlen(roman)+50) * sizeof(char));
+    char* additRoman = (char*) calloc(strlen(roman)+50, sizeof(char));
     decilmalToAddRoman(additRoman, n);
     subtNotationMainTransform(additRoman, roman);
     free(additRoman);
@@ -52,7 +52,7 @@ bool transformRomanAndInt(char* op, char** dest){
     if (isValidRoman(op)){
         additNotationMainTransform(op, dest);
     }else if (isValidInteger(op)){
-        char* aux = (char*) malloc((strlen(op)+50) *sizeof(char));
+        char* aux = (char*) calloc(strlen(op)+50, sizeof(char));
         intToRomanMain(atoi(op), &aux);
         additNotationMainTransform(aux, dest);
         free(aux);
@@ -64,8 +64,8 @@ bool transformRomanAndInt(char* op, char** dest){
 
 
 void sumRomanNumbersMain(char* op1, char* op2, char** dest){
-    char* upperop1 = (char*) malloc((strlen(op1) + 50) * sizeof(char));
-    char* upperop2 =(char*) malloc((strlen(op2) + 50) * sizeof(char));
+    char* upperop1 = (char*) calloc(strlen(op1) + 50, sizeof(char));
+    char* upperop2 =(char*) calloc(strlen(op2) + 50, sizeof(char));
     char* additop1;
     char* additop2;
 
