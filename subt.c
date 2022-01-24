@@ -64,25 +64,25 @@ void concatFinalSubt(char** s2, char* s1Source, char* transformedAddictiveRomans
     strcat(aux, s1Source);
     orderRoman(aux, *s2);
     strcat(*s2, transformedDiminutiveRomans); // a logica de tudo parece certa, mas nao posso so concatenar no final
+    free(aux);
 }
 
 bool subtNotationMainTransform(char* s1, char** s2){
     toUpperCase(s1);
-    if (!isValid(s1)){
+    if (!isValidRoman(s1)){
         return false;
     }
 
     int size = strlen(s1);
-    char* s1Source = (char*) malloc(size*sizeof(char) + sizeof(char));
-    char* transformedAddictiveRomans = (char*) malloc(size*sizeof(char) + sizeof(char));
-    char* transformedDiminutiveRomans = (char*) malloc((size+50)*sizeof(char) + sizeof(char)); //verificar o tamanho disso, pq pode expandir
+    char* s1Source = (char*) calloc(size, sizeof(char));
+    char* transformedAddictiveRomans = (char*) calloc(size+sizeof(char), sizeof(char));
+    char* transformedDiminutiveRomans = (char*) calloc(size+50, sizeof(char)); //verificar o tamanho disso, pq pode expandir
     orderRoman(s1, s1Source);
     transformAddictiveRoman(s1Source, transformedAddictiveRomans);
     cleanStringZeros(&s1Source);
     transformDiminutiveRomans(s1Source, transformedDiminutiveRomans);
     cleanStringZeros(&s1Source);
     concatFinalSubt(s2, s1Source, transformedAddictiveRomans, transformedDiminutiveRomans);
-    printf("romantoints2: %d", romanToInt(*s2));
     free(s1Source);
     free(transformedDiminutiveRomans);
     free(transformedAddictiveRomans);

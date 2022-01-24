@@ -52,7 +52,7 @@ char getRomanValue(int n){
     }
 }
 
-bool isValid(char* s1){
+bool isValidRoman(char* s1){
     char validCharacters[] = "IVXLCDM";
     for(int i = 0; i < strlen(s1); i++){
         bool validChar = false;
@@ -69,6 +69,16 @@ bool isValid(char* s1){
     return true;
 }
 
+bool isValidInteger(char* number){
+    for(int i = 0; i < strlen(number); i++){
+        if (number[i] < '0' || number[i] > '9'){
+            return false;
+        }
+    }
+    return true;
+}
+
+
 void toUpperCase(char* s1){
     for(int i = 0; i < strlen(s1); i++){
         if (s1[i] >= 97 && s1[i]<= 122){
@@ -78,7 +88,7 @@ void toUpperCase(char* s1){
 }
 
 void cleanStringZeros(char** c1){
-    char* c2 = (char*) malloc(strlen(*c1)*sizeof(char) + sizeof(char));
+    char* c2 = (char*) calloc(strlen(*c1) + 1, sizeof(char));
     int c2Counter = 0;
     for(int i = 0; i < strlen(*c1); i++){
         if((*c1)[i] != '0'){
@@ -125,3 +135,6 @@ void orderRoman(char* s1, char* dest){
         }
     }
 }
+
+
+
