@@ -78,7 +78,6 @@ void sumRomanNumbersMain(char* op1, char* op2, char** dest){
     transformRomanAndInt(upperop1, &additop1);
     transformRomanAndInt(upperop2, &additop2);
     strcat(additop1, additop2);
-
     subtNotationMainTransform(additop1, dest);
 
     free(upperop1);

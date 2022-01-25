@@ -1,23 +1,40 @@
 #include "util.h"
 #include "subt.h"
 
-void transformAddictiveRoman(char* aux, char* transformedRomans){
-    int size = strlen(aux), charTogether = 2, transformedRomansCounter = 0, j = 0;
-    bool is5Loop = false;
+void transformAddictiveRoman(char** addictiveAccumulator, char* transformedRomans);
+
+void checkNewTransforms(char** addictiveAccumulator, char* transformedRomans, bool hasTransformations){
+    cleanStringZeros(addictiveAccumulator);
+    strcat(*addictiveAccumulator, transformedRomans);
+    memset(transformedRomans, 0, strlen(transformedRomans));
+    char* aux = calloc(strlen(*addictiveAccumulator), sizeof(char));
+    orderRoman(*addictiveAccumulator, aux);
+    free(*addictiveAccumulator);
+    *addictiveAccumulator = aux;
+
+    if (hasTransformations){
+        transformAddictiveRoman(addictiveAccumulator, transformedRomans);
+    }
+}
+
+void transformAddictiveRoman(char** addictiveAccumulator, char* transformedRomans){
+    int size = strlen(*addictiveAccumulator), charTogether = 2, transformedRomansCounter = 0, j = 0;
+    bool is5Loop = false, hasTransformations = false;
     char testers[] = {'M', 'D', 'C', 'L', 'X', 'V', 'I'};
     for (int i = 1; i < N_ROMAN_CHARACTERS; i++){
         int nCharTogether = 0;
         while(j < size){
-            if (testers[i] == aux[j]){
+            if (testers[i] == (*addictiveAccumulator)[j]){
                 nCharTogether++;
             }
             if (nCharTogether == charTogether){
                 transformedRomans[transformedRomansCounter] = testers[i - 1];
                 transformedRomansCounter++;
                 for (int k = 0; k < nCharTogether; k++){
-                    aux[j - k] = '0'; //removido
+                    (*addictiveAccumulator)[j - k] = '0'; //removido
                 }
                 nCharTogether = 0;
+                hasTransformations = true;
             }
             j++;
         }
@@ -25,6 +42,7 @@ void transformAddictiveRoman(char* aux, char* transformedRomans){
         is5Loop = !is5Loop;
         charTogether = 2 + (3*is5Loop);
     }
+    checkNewTransforms(addictiveAccumulator, transformedRomans, hasTransformations);
 }
 
 void transformDiminutiveRomans(char* aux, char* transformedRomans){
@@ -57,13 +75,12 @@ void transformDiminutiveRomans(char* aux, char* transformedRomans){
 }
 
 
-void concatFinalSubt(char** s2, char* s1Source, char* transformedAddictiveRomans, char* transformedDiminutiveRomans){
+
+void concatFinalSubt(char** s2, char* s1Source, char* transformedDiminutiveRomans){
     *s2 = (char*) calloc((strlen(s1Source) + strlen(transformedDiminutiveRomans) + strlen(transformedDiminutiveRomans)), sizeof(char));
-    char* aux = (char*) calloc((sizeof(s1Source) + sizeof(transformedAddictiveRomans)) + 1, sizeof(char));
-    strcat(aux, transformedAddictiveRomans);
+    char* aux = (char*) calloc((sizeof(s1Source) + sizeof(s1Source)) + 1, sizeof(char));
     strcat(aux, s1Source);
-    orderRoman(aux, *s2);
-    strcat(*s2, transformedDiminutiveRomans); // a logica de tudo parece certa, mas nao posso so concatenar no final
+    orderRomanWithSubt(aux, transformedDiminutiveRomans, *s2);
     free(aux);
 }
 
@@ -74,16 +91,16 @@ bool subtNotationMainTransform(char* s1, char** s2){
     }
 
     int size = strlen(s1);
-    char* s1Source = (char*) calloc(size, sizeof(char));
-    char* transformedAddictiveRomans = (char*) calloc(size+sizeof(char), sizeof(char));
-    char* transformedDiminutiveRomans = (char*) calloc(size+50, sizeof(char)); //verificar o tamanho disso, pq pode expandir
-    orderRoman(s1, s1Source);
-    transformAddictiveRoman(s1Source, transformedAddictiveRomans);
-    cleanStringZeros(&s1Source);
-    transformDiminutiveRomans(s1Source, transformedDiminutiveRomans);
-    cleanStringZeros(&s1Source);
-    concatFinalSubt(s2, s1Source, transformedAddictiveRomans, transformedDiminutiveRomans);
-    free(s1Source);
+    char* addictiveAccumulator = (char*) calloc(size + 50, sizeof(char));
+    char* transformedAddictiveRomans = (char*) calloc(size+sizeof(char), sizeof(char)); //remover esse malloc
+    char* transformedDiminutiveRomans = (char*) calloc(size+50, sizeof(char)); //50 extras pq pode expandir
+    orderRoman(s1, addictiveAccumulator);
+
+    transformAddictiveRoman(&addictiveAccumulator, transformedAddictiveRomans);
+    transformDiminutiveRomans(addictiveAccumulator, transformedDiminutiveRomans);
+    cleanStringZeros(&addictiveAccumulator);
+    concatFinalSubt(s2, addictiveAccumulator, transformedDiminutiveRomans);
+    free(addictiveAccumulator);
     free(transformedDiminutiveRomans);
     free(transformedAddictiveRomans);
     return true;

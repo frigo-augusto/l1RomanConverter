@@ -18,4 +18,5 @@ void cleanStringZeros(char** c1);
 bool isValidInteger(char* number);
 int romanToInt(char* roman);
 void orderRoman(char* s1, char* aux);
+void orderRomanWithSubt(char* s1, char* s2, char* dest);
 #endif

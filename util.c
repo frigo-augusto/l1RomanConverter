@@ -136,5 +136,29 @@ void orderRoman(char* s1, char* dest){
     }
 }
 
+void orderRomanWithSubt(char* s1, char* s2, char* dest){
+    int s1size = strlen(s1), s2size = strlen(s2), pstr1 = 0, pstr2 = 1, destPosition = 0;
+    char testers[] = {'M', 'D', 'C', 'L', 'X', 'V', 'I'};
+    for (int i = 0; i < N_ROMAN_CHARACTERS; i++){
+        for(int j = 0; j < s1size; j++){
+            //vai ter duas condicoes de parada cuidar pra n acessar area q n pode de memoria
+            if (s1[j] == testers[i]){
+                dest[destPosition] = testers[i];
+                pstr1++;
+                destPosition++;
+            }
+        }
+        for(int j = 1; j < s2size; j+=2){
+            if (s2[j] == testers[i]){
+                dest[destPosition] = s2[pstr2 - 1];
+                dest[destPosition + 1] = s2[pstr2];
+                pstr2 += 2;
+                destPosition += 2;
+            }
+        }
+    }
+    dest[destPosition] = '\0';
+}
+
 
 
