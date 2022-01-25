@@ -10,3 +10,5 @@ execução do case na mesma linha, mas ia ficar feio. Achei que ficaria mais lim
 2 - Há alguns valores exagerados na hora de alocar memória. Isso porque algumas strings
 em romano podem ter um comportamento, de certa forma, imprevisível.
 Passar IV para notação aditiva, por exemplo, gera IIII, quadruplicando o tamanho da string.
+
+3 - Para testar o programa, edite os valores dos strcpy que estão na main.

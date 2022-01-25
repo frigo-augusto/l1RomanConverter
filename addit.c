@@ -19,7 +19,6 @@ void decilmalToAddRoman(char* roman, int decimal){
     for (int i = 0; i < N_ROMAN_CHARACTERS; i++) {
         testConvertNumber(&decimal, testers[i], roman, &romanPosition);
     }
-    printf("eu sou um breakpoint");
 }
 
 
