@@ -1,7 +1,7 @@
 #include "util.h"
 
-int getIntegerValue(char c){
-    switch (c) {
+int getIntegerValue(char roman){
+    switch (roman) {
         case 'I':
             return 1;
             break;
@@ -22,6 +22,9 @@ int getIntegerValue(char c){
             break;
         case 'M':
             return 1000;
+            break;
+        default:
+            return 0;
             break;
     }
 }
@@ -49,15 +52,18 @@ char getRomanValue(int n){
         case 1000:
             return 'M';
             break;
+        default:
+            return 0;
+            break;
     }
 }
 
-bool isValidRoman(char* s1){
+bool isValidRoman(char* roman){
     char validCharacters[] = "IVXLCDM";
-    for(int i = 0; i < strlen(s1); i++){
+    for(int i = 0; i < strlen(roman); i++){
         bool validChar = false;
         for(int j = 0; j < strlen(validCharacters); j++){
-            if (s1[i] == validCharacters[j]){
+            if (roman[i] == validCharacters[j]){
                 validChar = true;
                 break;
             }
@@ -79,25 +85,25 @@ bool isValidInteger(char* number){
 }
 
 
-void toUpperCase(char* s1){
-    for(int i = 0; i < strlen(s1); i++){
-        if (s1[i] >= 97 && s1[i]<= 122){
-            *(s1+i) = *(s1+i) - 32;
+void toUpperCase(char* c){
+    for(int i = 0; i < strlen(c); i++){
+        if (c[i] >= 'a' && c[i] <= 'z'){
+            *(c + i) = *(c + i) - 32;
         }
     }
 }
 
-void cleanStringZeros(char** c1){
-    char* c2 = (char*) calloc(strlen(*c1) + 1, sizeof(char));
+void cleanStringZeros(char** c){
+    char* c2 = (char*) calloc(strlen(*c) + 1, sizeof(char));
     int c2Counter = 0;
-    for(int i = 0; i < strlen(*c1); i++){
-        if((*c1)[i] != '0'){
-            c2[c2Counter] = (*c1)[i];
+    for(int i = 0; i < strlen(*c); i++){
+        if((*c)[i] != '0'){
+            c2[c2Counter] = (*c)[i];
             c2Counter++;
         }
     }
-    free(*c1);
-    *c1 = c2;
+    free(*c);
+    *c = c2;
 }
 
 
@@ -123,12 +129,12 @@ int romanToInt(char* roman){
     return accumulator;
 }
 
-void orderRoman(char* s1, char* dest){
-    int size = strlen(s1), destPosition = 0;
+void orderRoman(char* src, char* dest){
+    int size = strlen(src), destPosition = 0;
     char testers[] = {'M', 'D', 'C', 'L', 'X', 'V', 'I'};
     for (int i = 0; i < N_ROMAN_CHARACTERS; i++){
         for(int j = 0; j < size; j++){
-            if (s1[j] == testers[i]){
+            if (src[j] == testers[i]){
                 dest[destPosition] = testers[i];
                 destPosition++;
             }
@@ -136,23 +142,20 @@ void orderRoman(char* s1, char* dest){
     }
 }
 
-void orderRomanWithSubt(char* s1, char* s2, char* dest){
-    int s1size = strlen(s1), s2size = strlen(s2), pstr1 = 0, pstr2 = 1, destPosition = 0;
+void orderRomanWithSubt(char* srcAdd, char* srcSubt, char* dest){
+    int s1size = strlen(srcAdd), s2size = strlen(srcSubt), destPosition = 0;
     char testers[] = {'M', 'D', 'C', 'L', 'X', 'V', 'I'};
     for (int i = 0; i < N_ROMAN_CHARACTERS; i++){
         for(int j = 0; j < s1size; j++){
-            //vai ter duas condicoes de parada cuidar pra n acessar area q n pode de memoria
-            if (s1[j] == testers[i]){
+            if (srcAdd[j] == testers[i]){
                 dest[destPosition] = testers[i];
-                pstr1++;
                 destPosition++;
             }
         }
         for(int j = 1; j < s2size; j+=2){
-            if (s2[j] == testers[i]){
-                dest[destPosition] = s2[pstr2 - 1];
-                dest[destPosition + 1] = s2[pstr2];
-                pstr2 += 2;
+            if (srcSubt[j] == testers[i]){
+                dest[destPosition] = srcSubt[j - 1];
+                dest[destPosition + 1] = srcSubt[j];
                 destPosition += 2;
             }
         }

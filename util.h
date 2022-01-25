@@ -12,11 +12,11 @@
 #define UTIL_H
 int getIntegerValue(char c);
 char getRomanValue(int n);
-bool isValidRoman(char* s1);
-void toUpperCase(char* s1);
-void cleanStringZeros(char** c1);
+bool isValidRoman(char* roman);
+void toUpperCase(char* c);
+void cleanStringZeros(char** c);
 bool isValidInteger(char* number);
 int romanToInt(char* roman);
-void orderRoman(char* s1, char* aux);
-void orderRomanWithSubt(char* s1, char* s2, char* dest);
+void orderRoman(char* src, char* aux);
+void orderRomanWithSubt(char* srcAdd, char* srcSubt, char* dest);
 #endif

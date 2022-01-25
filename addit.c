@@ -41,6 +41,9 @@ bool additNotationMainTransform(char* s1, char** s2){
 
 
 bool intToRomanMain(int n, char** roman){
+    if (n <= 0 || n >= 5000){
+        return false;
+    }
     char* additRoman = (char*) calloc(strlen(roman)+50, sizeof(char));
     decilmalToAddRoman(additRoman, n);
     subtNotationMainTransform(additRoman, roman);
@@ -51,19 +54,19 @@ bool intToRomanMain(int n, char** roman){
 bool transformRomanAndInt(char* op, char** dest){
     if (isValidRoman(op)){
         additNotationMainTransform(op, dest);
+        return true;
     }else if (isValidInteger(op)){
         char* aux = (char*) calloc(strlen(op)+50, sizeof(char));
         intToRomanMain(atoi(op), &aux);
         additNotationMainTransform(aux, dest);
         free(aux);
-    }else{
-        exit(1);
+        return true;
     }
     return false;
 }
 
 
-void sumRomanNumbersMain(char* op1, char* op2, char** dest){
+bool sumRomanNumbersMain(char* op1, char* op2, char** dest){
     char* upperop1 = (char*) calloc(strlen(op1) + 50, sizeof(char));
     char* upperop2 =(char*) calloc(strlen(op2) + 50, sizeof(char));
     char* additop1;
@@ -74,9 +77,11 @@ void sumRomanNumbersMain(char* op1, char* op2, char** dest){
     toUpperCase(upperop1);
     toUpperCase(upperop2);
 
-
-    transformRomanAndInt(upperop1, &additop1);
-    transformRomanAndInt(upperop2, &additop2);
+    bool exitc1 = transformRomanAndInt(upperop1, &additop1);
+    bool exitc2 = transformRomanAndInt(upperop2, &additop2);
+    if (!(exitc1 && exitc2)){
+        return false;
+    }
     strcat(additop1, additop2);
     subtNotationMainTransform(additop1, dest);
 
@@ -84,5 +89,6 @@ void sumRomanNumbersMain(char* op1, char* op2, char** dest){
     free(upperop2);
     free(additop1);
     free(additop2);
+    return true;
 }
 

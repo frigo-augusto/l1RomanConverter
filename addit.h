@@ -8,5 +8,5 @@
 #define ADDIT_H
 bool additNotationMainTransform(char* s1, char** s2);
 bool intToRomanMain(int n, char** roman);
-void sumRomanNumbersMain(char* op1, char* op2, char** dest);
+bool sumRomanNumbersMain(char* op1, char* op2, char** dest);
 #endif
