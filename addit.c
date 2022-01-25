@@ -3,22 +3,23 @@
 #include "subt.h"
 
 
-void testConvertNumber(int *number, int tester, char* s2, int *s2Position){
+void testConvertNumber(int *number, int tester, char* roman, int* romanPosition){
 
     char romanValue = getRomanValue(tester);
     while (*number >= tester){
-        s2[(*s2Position)] = romanValue;
-        (*s2Position)++;
+        roman[(*romanPosition)] = romanValue;
+        (*romanPosition)++;
         (*number) -= tester;
     }
 }
 
-void decilmalToAddRoman(char* s2, int decimals1){
-    int s2Position = 0;
+void decilmalToAddRoman(char* roman, int decimal){
+    int romanPosition = 0;
     int testers[] = {1000, 500, 100, 50, 10, 5, 1};
     for (int i = 0; i < N_ROMAN_CHARACTERS; i++) {
-        testConvertNumber(&decimals1, testers[i], s2, &s2Position);
+        testConvertNumber(&decimal, testers[i], roman, &romanPosition);
     }
+    printf("eu sou um breakpoint");
 }
 
 
@@ -44,14 +45,14 @@ bool intToRomanMain(int n, char** roman){
     if (n <= 0 || n >= 5000){
         return false;
     }
-    char* additRoman = (char*) calloc(strlen(roman)+50, sizeof(char));
+    char* additRoman = (char*) calloc(150, sizeof(char));
     decilmalToAddRoman(additRoman, n);
     subtNotationMainTransform(additRoman, roman);
     free(additRoman);
     return true;
 }
 
-bool transformRomanAndInt(char* op, char** dest){
+bool transformRomanAndIntToAdditNot(char* op, char** dest){
     if (isValidRoman(op)){
         additNotationMainTransform(op, dest);
         return true;
@@ -77,8 +78,8 @@ bool sumRomanNumbersMain(char* op1, char* op2, char** dest){
     toUpperCase(upperop1);
     toUpperCase(upperop2);
 
-    bool exitc1 = transformRomanAndInt(upperop1, &additop1);
-    bool exitc2 = transformRomanAndInt(upperop2, &additop2);
+    bool exitc1 = transformRomanAndIntToAdditNot(upperop1, &additop1);
+    bool exitc2 = transformRomanAndIntToAdditNot(upperop2, &additop2);
     if (!(exitc1 && exitc2)){
         return false;
     }

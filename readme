@@ -1,0 +1,12 @@
+# Trabalho de laboratório de programação 1
+
+Compilação: gcc main.c subt.c addit.c util.c -o file
+
+Observações importantes:
+
+1 - Passei das 25 linhas nas funções de switch case, podia ter colocado a
+execução do case na mesma linha, mas ia ficar feio. Achei que ficaria mais limpo assim.
+
+2 - Há alguns valores exagerados na hora de alocar memória. Isso porque algumas strings
+em romano podem ter um comportamento, de certa forma, imprevisível.
+Passar IV para notação aditiva, por exemplo, gera IIII, quadruplicando o tamanho da string.

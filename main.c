@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include "addit.h"
 #include "subt.h"
-#include "util.h"
 
 
 void testAddFunction(){
